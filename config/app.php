@@ -176,6 +176,10 @@ return [
 
         Laratrust\LaratrustServiceProvider::class,
 
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
+
+        Intervention\Image\ImageServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -238,7 +242,8 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class, 
 
-        'Laratrust'   => Laratrust\LaratrustFacade::class,       
+        'Laratrust'   => Laratrust\LaratrustFacade::class, 
+        'Image' => Intervention\Image\Facades\Image::class      
 
     ],
 

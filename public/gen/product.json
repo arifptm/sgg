@@ -1,0 +1,88 @@
+[
+    {
+        "name": "id",
+        "dbType": "increments",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false
+    },
+    {
+        "name": "title",
+        "dbType": "string,63",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": true
+    },
+    {
+        "name": "slug",
+        "dbType": "string,63",
+        "htmlType": "text",
+        "inForm": false
+    },
+    {
+        "name": "register_date",
+        "dbType": "timestamp",
+        "htmlType": ""
+    },
+    {
+        "name": "body",
+        "dbType": "text",
+        "htmlType": "textarea"
+    },
+    {
+        "name": "image",
+        "dbType": "string,127",
+        "htmlType": "file"
+    },      
+    {
+        "name": "price",
+        "dbType": "decimal",
+        "htmlType": "text"
+    },        
+    {
+        "name": "url",
+        "dbType": "string,127",
+        "htmlType": "url"
+    },        
+    {
+        "name": "placement",
+        "dbType": "string,63",
+        "htmlType": "text"
+    },
+    {
+        "name": "disposable",
+        "dbType": "boolean",
+        "htmlType": "radio,Yes,No"
+    },
+    {
+        "name": "stock",
+        "dbType": "integer",
+        "htmlType": "number"
+    },
+    {
+        "name": "created_at",
+        "dbType": "timestamp",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "timestamp",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false
+    }
+]

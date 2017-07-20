@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Repositories\ProductRepository;
-//use App\Http\Controllers\AppBaseController;
-use InfyOm\Generator\Controller\AppBaseController;
+use App\Http\Requests\Admin\CreateProductRequest;
+use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Repositories\Admin\ProductRepository;
+use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -34,7 +33,7 @@ class ProductController extends AppBaseController
         $this->productRepository->pushCriteria(new RequestCriteria($request));
         $products = $this->productRepository->all();
 
-        return view('products.index')
+        return view('admin.products.index')
             ->with('products', $products);
     }
 
@@ -45,7 +44,7 @@ class ProductController extends AppBaseController
      */
     public function create()
     {
-        return view('products.create');
+        return view('admin.products.create');
     }
 
     /**
@@ -61,12 +60,9 @@ class ProductController extends AppBaseController
 
         $product = $this->productRepository->create($input);
 
-        $img = Image::make($_FILES['image']['tmp_name']);
-        $img->save('upload/bar.jpg');
-
         Flash::success('Product saved successfully.');
 
-        return redirect(route('products.index'));
+        return redirect(route('admin.products.index'));
     }
 
     /**
@@ -83,10 +79,10 @@ class ProductController extends AppBaseController
         if (empty($product)) {
             Flash::error('Product not found');
 
-            return redirect(route('products.index'));
+            return redirect(route('admin.products.index'));
         }
 
-        return view('products.show')->with('product', $product);
+        return view('admin.products.show')->with('product', $product);
     }
 
     /**
@@ -103,10 +99,10 @@ class ProductController extends AppBaseController
         if (empty($product)) {
             Flash::error('Product not found');
 
-            return redirect(route('products.index'));
+            return redirect(route('admin.products.index'));
         }
 
-        return view('products.edit')->with('product', $product);
+        return view('admin.products.edit')->with('product', $product);
     }
 
     /**
@@ -124,18 +120,21 @@ class ProductController extends AppBaseController
         if (empty($product)) {
             Flash::error('Product not found');
 
-            return redirect(route('products.index'));
+            return redirect(route('admin.products.index'));
         }
 
+        $image = $request->file('image');
+        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+        $saveIn = public_path('/upload');
+        $image->move($saveIn, $input['imagename']);
+        dd($request->all());
+        
+        
         $product = $this->productRepository->update($request->all(), $id);
-
-        dd($product);
-        //$img = Image::make($_FILES['image']['tmp_name']);
-        //$img->save('upload/bar.jpg');
 
         Flash::success('Product updated successfully.');
 
-        return redirect(route('products.index'));
+        return redirect(route('admin.products.index'));
     }
 
     /**
@@ -152,13 +151,13 @@ class ProductController extends AppBaseController
         if (empty($product)) {
             Flash::error('Product not found');
 
-            return redirect(route('products.index'));
+            return redirect(route('admin.products.index'));
         }
 
         $this->productRepository->delete($id);
 
         Flash::success('Product deleted successfully.');
 
-        return redirect(route('products.index'));
+        return redirect(route('admin.products.index'));
     }
 }
