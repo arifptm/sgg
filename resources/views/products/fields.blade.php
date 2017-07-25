@@ -1,14 +1,17 @@
 <!-- Title Field -->
-<div class="form-group col-sm-6">
+<div class="col-md-9">
+<div class="form-group col-sm-12">
     {!! Form::label('title', 'Title:') !!}
     {!! Form::text('title', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Register Date Field -->
-<div class="form-group col-sm-6">
+@if auth()
+<div class="form-group col-sm-12">
     {!! Form::label('register_date', 'Register Date:') !!}
     {!! Form::text('register_date', null, ['class' => 'form-control']) !!}
 </div>
+@endauth
 
 <!-- Body Field -->
 <div class="form-group col-sm-12 col-lg-12">
@@ -58,4 +61,5 @@
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('products.index') !!}" class="btn btn-default">Cancel</a>
+</div>
 </div>

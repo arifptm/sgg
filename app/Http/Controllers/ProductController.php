@@ -15,20 +15,22 @@ use Image;
 
 class ProductController extends AppBaseController
 {
-    /** @var  ProductRepository */
+   
     private $productRepository;
+
+
+
+
 
     public function __construct(ProductRepository $productRepo)
     {
         $this->productRepository = $productRepo;
     }
 
-    /**
-     * Display a listing of the Product.
-     *
-     * @param Request $request
-     * @return Response
-     */
+
+
+
+
     public function index(Request $request)
     {
         $this->productRepository->pushCriteria(new RequestCriteria($request));
@@ -38,39 +40,45 @@ class ProductController extends AppBaseController
             ->with('products', $products);
     }
 
-    /**
-     * Show the form for creating a new Product.
-     *
-     * @return Response
-     */
+    
+
+
+
     public function create()
     {
         return view('products.create');
     }
 
-    /**
-     * Store a newly created Product in storage.
-     *
-     * @param CreateProductRequest $request
-     *
-     * @return Response
-     */
+
+
+
+
     public function store(CreateProductRequest $request)
     {
-        //$input = $request->all();
-
-        $photoName = time().'.'.$request->image->guessClientExtension();
-
-        dd($photoName);
-
+        $input = $request->all();
         $product = $this->productRepository->create($input);
 
-        $img = Image::make($_FILES['image']['tmp_name']);
-        $img->save('upload/bar.jpg');
+        if ($request->hasFile('image')) {
+            if($request->file('image')->isValid()) {
+                try {
+                    $file = $request->file('image');
+                    $name = time() . '.' . $file->guessClientExtension();
+                    $request->file('image')->move("upload/image/", $name);
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+        }
+
+        $product->image = $name;
+        $product->save();   
+
+        $img = Image::make('upload/image/'.$name)->resize(320, 240);
+        $img->save('upload/image-thumb/'.$name);
 
         Flash::success('Product saved successfully.');
 
-        return redirect(route('products.index'));
+        return redirect(route('admin.products.index'));
     }
 
     /**
