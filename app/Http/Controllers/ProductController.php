@@ -57,7 +57,11 @@ class ProductController extends AppBaseController
      */
     public function store(CreateProductRequest $request)
     {
-        $input = $request->all();
+        //$input = $request->all();
+
+        $photoName = time().'.'.$request->image->guessClientExtension();
+
+        dd($photoName);
 
         $product = $this->productRepository->create($input);
 
