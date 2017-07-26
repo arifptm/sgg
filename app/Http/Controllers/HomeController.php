@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
+use App\User;
+use App\Role;
+use Laratrust;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $p = Product::all();
+
+        if Laratrust::hasRole('user')   
+        {
+            return view('products.index',['products' => $p]);
+        }
+        
+        return view('products.index',['products' => $p]);
     }
 }

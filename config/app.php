@@ -180,6 +180,8 @@ return [
 
         Intervention\Image\ImageServiceProvider::class,
 
+        Yajra\Datatables\DatatablesServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

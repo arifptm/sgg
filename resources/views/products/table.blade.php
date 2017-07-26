@@ -4,7 +4,9 @@
         <th>Slug</th>
         <th>Register Date</th>
         <th>Body</th>
-        <th>Image</th>
+        @role('superadministrator')
+            <th>Image</th>
+        @endrole
         <th>Price</th>
         <th>Url</th>
         <th>Placement</th>
@@ -19,7 +21,9 @@
             <td>{!! $product->slug !!}</td>
             <td>{!! $product->register_date !!}</td>
             <td>{!! $product->body !!}</td>
-            <td>{!! $product->image !!}</td>
+            @role('superadministrator')
+                <td>{!! $product->image !!}</td>
+            @endrole
             <td>{!! $product->price !!}</td>
             <td>{!! $product->url !!}</td>
             <td>{!! $product->placement !!}</td>

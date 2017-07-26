@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
+
 });
 
 Route::resource('products', 'ProductController');
@@ -22,14 +23,22 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('admin/products', ['as'=> 'admin.products.index', 'uses' => 'Admin\ProductController@index']);
-Route::post('admin/products', ['as'=> 'admin.products.store', 'uses' => 'Admin\ProductController@store']);
-Route::get('admin/products/create', ['as'=> 'admin.products.create', 'uses' => 'Admin\ProductController@create']);
-Route::put('admin/products/{products}', ['as'=> 'admin.products.update', 'uses' => 'Admin\ProductController@update']);
-Route::patch('admin/products/{products}', ['as'=> 'admin.products.update', 'uses' => 'Admin\ProductController@update']);
-Route::delete('admin/products/{products}', ['as'=> 'admin.products.destroy', 'uses' => 'Admin\ProductController@destroy']);
-Route::get('admin/products/{products}', ['as'=> 'admin.products.show', 'uses' => 'Admin\ProductController@show']);
-Route::get('admin/products/{products}/edit', ['as'=> 'admin.products.edit', 'uses' => 'Admin\ProductController@edit']);
+Route::get('products', ['as'=> 'products.index', 'uses' => 'ProductController@index']);
+Route::post('products', ['as'=> 'products.store', 'uses' => 'ProductController@store']);
+Route::get('products/create', ['as'=> 'products.create', 'uses' => 'ProductController@create']);
+Route::put('products/{products}', ['as'=> 'products.update', 'uses' => 'ProductController@update']);
+Route::patch('products/{products}', ['as'=> 'products.update', 'uses' => 'ProductController@update']);
+Route::delete('products/{products}', ['as'=> 'products.destroy', 'uses' => 'ProductController@destroy']);
+Route::get('products/{products}', ['as'=> 'products.show', 'uses' => 'ProductController@show']);
+Route::get('products/{products}/edit', ['as'=> 'products.edit', 'uses' => 'ProductController@edit']);
+
+Route::prefix('manage')->group(function(){
+	Route::get('/', 'ManageController@index');
+	Route::get('/dashboard', 'ManageController@dashboard')->name('manage.dashboard');
+});
+
+
+
 
 Route::get('tes', function(){
 	
