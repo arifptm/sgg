@@ -37,10 +37,15 @@ Route::prefix('manage')->group(function(){
 	Route::get('/dashboard', 'ManageController@dashboard')->name('manage.dashboard');
 });
 
+Route::group(['prefix' => 'manage', 'middleware' => ['role:superadministrator']], function() {
+    Route::get('/', 'AdminController@welcome');
+    Route::get('/manage', ['middleware' => ['permission:manage-admins'], 'uses' => 'AdminController@manageAdmins']);
+});
+
+Route::get('datatables/data', 'DatatablesController@anyData')->name('datatables.data');
+Route::get('datatables', 'DatatablesController@getIndex');
 
 
-
-Route::get('tes', function(){
-	
+Route::get('tes', function(){	
 	$admin->attachPermission($createProduct);
 });

@@ -145,5 +145,6 @@
 <script src="{{ asset('js/app.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
+
 </body>
 </html>

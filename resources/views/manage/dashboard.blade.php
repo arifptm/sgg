@@ -12,7 +12,7 @@
 
             <div class="box-body">
                 <div class="row">
-kl;k;lk
+
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ use App\Product;
 use App\User;
 use App\Role;
 use Laratrust;
+use Yajra\Datatables\Facades\Datatables;
 
 class HomeController extends Controller
 {
@@ -25,15 +26,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function anyData()
+    {
+        return Datatables::of(Product::query())->make(true);
+    }
+
     public function index()
     {
         $p = Product::all();
 
-        if Laratrust::hasRole('user')   
+        if (Laratrust::hasRole('user')) 
         {
-            return view('products.index',['products' => $p]);
+            
+            return view('product.list',['products' => $p]);
         }
         
-        return view('products.index',['products' => $p]);
+        return view('manage.products.index',['products' => $p]);
     }
 }
