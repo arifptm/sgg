@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0d2235dc8df7b21ced3c085101917e4",
+    "content-hash": "abe404fc8844ce7f758a8b4e4a5a78ed",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -164,33 +164,33 @@
         },
         {
             "name": "doctrine/inflector",
-            "version": "v1.2.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462"
+                "reference": "90b2128806bfde671b6952ab8bea493942c1fdae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/e11d84c6e018beedd929cff5220969a3c6d1d462",
-                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
+                "reference": "90b2128806bfde671b6952ab8bea493942c1fdae",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": ">=5.3.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.2"
+                "phpunit/phpunit": "4.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Inflector\\": "lib/Doctrine/Common/Inflector"
+                "psr-0": {
+                    "Doctrine\\Common\\Inflector\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -227,7 +227,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-07-22T12:18:28+00:00"
+            "time": "2015-11-06T14:35:42+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -1653,16 +1653,16 @@
         },
         {
             "name": "santigarcor/laratrust",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/santigarcor/laratrust.git",
-                "reference": "82c850ddc21a912c345a82e6d9c2c120d6fe8720"
+                "reference": "5a029a4f4a5c3a4171a8ee1a8b06e466a3cf6d0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/santigarcor/laratrust/zipball/82c850ddc21a912c345a82e6d9c2c120d6fe8720",
-                "reference": "82c850ddc21a912c345a82e6d9c2c120d6fe8720",
+                "url": "https://api.github.com/repos/santigarcor/laratrust/zipball/5a029a4f4a5c3a4171a8ee1a8b06e466a3cf6d0b",
+                "reference": "5a029a4f4a5c3a4171a8ee1a8b06e466a3cf6d0b",
                 "shasum": ""
             },
             "require": {
@@ -1717,7 +1717,7 @@
                 "rbac",
                 "roles"
             ],
-            "time": "2017-07-18T18:23:10+00:00"
+            "time": "2017-07-26T16:52:20+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2620,16 +2620,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v7.0.0",
+            "version": "v7.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "52b2a58fccbca1ee01667d347e32b28cf93f2f18"
+                "reference": "b0e4171a442d33a0d52f6a2b860bc2842f0a0096"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/52b2a58fccbca1ee01667d347e32b28cf93f2f18",
-                "reference": "52b2a58fccbca1ee01667d347e32b28cf93f2f18",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b0e4171a442d33a0d52f6a2b860bc2842f0a0096",
+                "reference": "b0e4171a442d33a0d52f6a2b860bc2842f0a0096",
                 "shasum": ""
             },
             "require": {
@@ -2642,7 +2642,8 @@
             },
             "require-dev": {
                 "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "~5.0"
+                "orchestra/testbench": "^3.4",
+                "phpunit/phpunit": "~5.7"
             },
             "suggest": {
                 "league/fractal": "Transform your api response into something you won't hate.",
@@ -2676,7 +2677,7 @@
                 "jquery",
                 "laravel"
             ],
-            "time": "2017-01-27T03:19:41+00:00"
+            "time": "2017-05-22T03:51:49+00:00"
         }
     ],
     "packages-dev": [
@@ -2866,7 +2867,7 @@
             ],
             "authors": [
                 {
-                    "name": "Pádraic Brady",
+                    "name": "Padraic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },

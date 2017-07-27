@@ -27,21 +27,12 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function anyData()
-    {
-        return Datatables::of(Product::query())->make(true);
-    }
-
     public function index()
     {
-        $p = Product::all();
 
         if (Laratrust::hasRole('user')) 
-        {
-            
-            return view('product.list',['products' => $p]);
+        {           
+            return redirect('/products');
         }
-        
-        return view('manage.products.index',['products' => $p]);
     }
 }
