@@ -28,6 +28,9 @@ class ProductController extends Controller
 
         $product= Product::select(['id', 'title', 'body', 'image', 'created_at', 'updated_at']);
         return Datatables::of($product)
+            ->addColumn('title_a', function ($product) {
+                return '<a href="/products/'.$product->id.'">'.$product->title.'</a>';
+            })
             ->addColumn('action', function ($product) {
                 return '<button             
                     data-dataid = "'.$product->id.'"
@@ -39,9 +42,9 @@ class ProductController extends Controller
                 //return '<a data-toggle="modal" data-target="modal-default" href="#edit-'.$product->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
             })
             ->addColumn('thumb', function ($product) {
-                return '<img src="images/tiny/'.$product->image.'" />';
+                return '<a href="/products/'.$product->id.'"><img src="images/tiny/'.$product->image.'" /></a>';
             })
-            ->rawColumns(['thumb','action'])
+            ->rawColumns(['title_a','thumb','action'])
             ->make(true);
     }
 
@@ -91,8 +94,17 @@ class ProductController extends Controller
     }
 
 
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        
+        if (empty($product)) {
+            Flash::error('Product not found');
+            return redirect(route('products.index'));
+        }
 
-
+        return view('product.show')->with('product', $product);
+    }
 
 
 
@@ -171,18 +183,7 @@ class ProductController extends Controller
     //  *
     //  * @return Response
     //  */
-    // public function show($id)
-    // {
-    //     $product = $this->productRepository->findWithoutFail($id);
 
-    //     if (empty($product)) {
-    //         Flash::error('Product not found');
-
-    //         return redirect(route('products.index'));
-    //     }
-
-    //     return view('products.show')->with('product', $product);
-    // }
 
     // /**
     //  * Show the form for editing the specified Product.

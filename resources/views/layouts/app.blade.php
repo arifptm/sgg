@@ -25,7 +25,7 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 <b>Asset Management</b>
             </a>
 

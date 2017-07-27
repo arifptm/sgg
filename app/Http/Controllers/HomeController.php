@@ -34,5 +34,6 @@ class HomeController extends Controller
         {           
             return redirect('/products');
         }
+        return redirect('/products');
     }
 }

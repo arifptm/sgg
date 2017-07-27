@@ -23,8 +23,9 @@ Route::get('/home', 'HomeController@index');
 Route::group(['middleware' => ['role:user||admin||super']], function() {
 	Route::get('products/data', 'ProductController@data')->name('products.data');
 	Route::get('products', 'ProductController@index')->name('products.index');
-	Route::get('products/create', 'ProductController@create')->name('products.create');
 	Route::post('products/store', 'ProductController@store')->name('products.store');
+	Route::get('products/create', 'ProductController@create')->name('products.create');
+	Route::get('products/{id}', 'ProductController@show')->name('products.show');
 
 	Route::get('lineitems/create', 'LineitemController@create')->name('lineitems.create');
 	Route::post('lineitems/store', 'LineitemController@store')->name('lineitems.store');
@@ -55,9 +56,6 @@ Route::group(['middleware' => ['role:user||admin||super']], function() {
 // Route::get('datatables', 'DatatablesController@getIndex');
 
 
-
-
-http://yourhost.com/{route-name}/{template-name}/{file-name}
 
 Route::get('tes', function(){	
 	$admin->attachPermission($createProduct);
