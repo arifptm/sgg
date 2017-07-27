@@ -182,6 +182,8 @@ return [
 
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

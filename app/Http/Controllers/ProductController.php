@@ -11,24 +11,43 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Image;
 use App\Product;
+use App\Lineitem;
+use Auth;
 use Yajra\Datatables\Facades\Datatables;
+//use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ProductController extends Controller
 {
 
+    public function getNode($id){
+        $p = Product::findOrFail($id);
+        return $p;
+    }
+
     public function data(){
 
-        $product= Product::select(['id', 'title', 'body', 'created_at', 'updated_at']);
+        $product= Product::select(['id', 'title', 'body', 'image', 'created_at', 'updated_at']);
         return Datatables::of($product)
             ->addColumn('action', function ($product) {
-                return '<a data-toggle="modal" data-target="modal-default" href="#myModal" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+                return '<button             
+                    data-dataid = "'.$product->id.'"
+                    data-datatitle = "'.$product->title.'"
+                    data-dataimage= "<img src=images/medium/'. $product->image .' >"
+                    data-toggle="modal" 
+                    data-target="#myModal"  
+                    class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
                 //return '<a data-toggle="modal" data-target="modal-default" href="#edit-'.$product->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
             })
+            ->addColumn('thumb', function ($product) {
+                return '<img src="images/tiny/'.$product->image.'" />';
+            })
+            ->rawColumns(['thumb','action'])
             ->make(true);
     }
 
     public function index(){
-        return view('product.list');
+        $l = Lineitem::get();
+        return view('product.list', ['items' => $l]);
     }
 
     public function create(){
@@ -54,8 +73,17 @@ class ProductController extends Controller
         $product->image = $name;
         $product->save();   
 
-        $img = Image::make('upload/image/'.$name)->resize(320, 240);
-        $img->save('upload/image-thumb/'.$name);
+        //$img = Image::make('upload/image/'.$name)->resize(250, null);
+        
+//         $img = Image::cache(function($image) use (&$name) {
+//             $image->make('upload/image/'.$name)->resize(100, 200);         
+//             $image->save('upload/image-node/'.$name);
+//         });
+        
+        //     //     $img = Image::make('upload/image/'.$name)->resize(320, 240);
+        // $img->save('upload/image-thumb/'.$name);
+        
+        
 
         Flash::success('Product saved successfully.');
 

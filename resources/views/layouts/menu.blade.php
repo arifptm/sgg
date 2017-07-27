@@ -1,10 +1,10 @@
 @role('user||super||admin')
-<li class="{{ Request::is('products*') ? 'active' : 'active' }}">
-    <a href="{!! route('products.index') !!}"><i class="fa fa-edit"></i><span>Usulan</span></a>
+<li class="{{ Request::is('products*') ? 'active' : '' }}">
+    <a href="{!! route('products.create') !!}"><i class="fa fa-edit"></i><span>Usulan</span></a>
 </li>
 
-<li class="{{ Request::is('products*') ? 'active' : '' }}">
-    <a href="{!! route('products.index') !!}"><i class="fa fa-car"></i><span>Permintaan</span></a>
+<li class="{{ Request::is('lineitems*') ? 'active' : '' }}">
+    <a href="{!! route('lineitems.create') !!}"><i class="fa fa-car"></i><span>Permintaan</span></a>
 </li>
 @endrole
 
