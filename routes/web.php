@@ -20,7 +20,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['middleware' => ['role:user||admin||super']], function() {
+Route::group(['middleware' => []], function() {
 	Route::get('products/data', 'ProductController@data')->name('products.data');
 	Route::get('products', 'ProductController@index')->name('products.index');
 	Route::post('products/store', 'ProductController@store')->name('products.store');

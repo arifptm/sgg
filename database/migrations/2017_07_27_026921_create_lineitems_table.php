@@ -15,14 +15,15 @@ class CreateLineitemsTable extends Migration
     {
         Schema::create('lineitems', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_id');
-            $table->integer('product_id');
+            $table->integer('order_id')->unsigned();
+            $table->integer('product_id')->unsigned();
             $table->integer('quantity');
             $table->timestamps();
 
+            $table->engine = 'InnoDB';
+
             $table->foreign('order_id')->references('id')->on('orders')
-                ->onUpdate('cascade')->onDelete('cascade');
-                
+                ->onUpdate('cascade')->onDelete('cascade');               
 
         });
     }
