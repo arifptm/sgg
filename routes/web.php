@@ -20,17 +20,49 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['middleware' => []], function() {
-	Route::get('products/data', 'ProductController@data')->name('products.data');
+Route::group(['middleware' => ['role:user|super']], function() {
+	Route::get('products/data', 'ProductController@data')->name('products.data');	
+
 	Route::get('products', 'ProductController@index')->name('products.index');
 	Route::post('products/store', 'ProductController@store')->name('products.store');
 	Route::get('products/create', 'ProductController@create')->name('products.create');
 	Route::get('products/{id}', 'ProductController@show')->name('products.show');
 
+
 	Route::get('lineitems/create', 'LineitemController@create')->name('lineitems.create');
 	Route::post('lineitems/store', 'LineitemController@store')->name('lineitems.store');
+
+	Route::post('orders/checkout', 'OrderController@checkout')->name('orders.checkout');
+
 });
 
+
+
+Route::group(['prefix'=>'manage', 'middleware' => ['role:super|admin']], function() {
+
+	Route::get('dashboard', 'DashboardController@index');
+
+	
+
+	Route::get('products', 'ProductController@indexManage')->name('manage.products.index');
+	Route::get('products/{id}/edit', 'ProductController@edit')->name('manage.products.edit');
+	Route::patch('products/{id}', 'ProductController@update')->name('manage.products.update');
+
+
+	Route::get('products/create', 'ProductController@create')->name('products.create');
+	Route::post('products/store', 'ProductController@store')->name('products.store');
+
+
+	Route::delete('products/{id}', 'ProductController@edit')->name('products.edit');
+
+	Route::get('users', 'UserController@list')->name('users.list');	
+	Route::post('users/store', 'UserController@store')->name('users.store');
+	Route::get('users/create', 'UserController@create')->name('users.create');
+
+	Route::get('roles', 'RoleController@list')->name('roles.list');
+	Route::post('roles/store', 'RoleController@store')->name('roles.store');
+	Route::get('roles/create', 'RoleController@create')->name('roles.create');
+});
 
 
 // Route::get('products', ['as'=> 'products.index', 'uses' => 'ProductController@index']);
@@ -52,8 +84,7 @@ Route::group(['middleware' => []], function() {
 //     Route::get('/manage', ['middleware' => ['permission:manage-admins'], 'uses' => 'AdminController@manageAdmins']);
 // });
 
-// Route::get('datatables/data', 'DatatablesController@anyData')->name('datatables.data');
-// Route::get('datatables', 'DatatablesController@getIndex');
+
 
 
 

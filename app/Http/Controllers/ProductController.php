@@ -12,46 +12,90 @@ use Response;
 use Image;
 use App\Product;
 use App\Lineitem;
+use App\Order;
 use Auth;
+use Laratrust;
 use Yajra\Datatables\Facades\Datatables;
 //use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ProductController extends Controller
 {
-
-    public function getNode($id){
-        $p = Product::findOrFail($id);
-        return $p;
-    }
-
     public function data(){
 
-        $product= Product::select(['id', 'title', 'body', 'image', 'created_at', 'updated_at']);
-        return Datatables::of($product)
+        $product= Product::select(['id', 'stock', 'title', 'body', 'image', 'register_date', 'verified']);
+        $dt = Datatables::of($product)
             ->addColumn('title_a', function ($product) {
-                return '<a href="/products/'.$product->id.'">'.$product->title.'</a>';
+                return '<a href="/products/'.$product->id.'">'.$product->title.'</a><br><small>'. $product->verified.'</small>';
             })
             ->addColumn('action', function ($product) {
+                if ($product->getOriginal('verified') == 1 )
                 return '<button             
                     data-dataid = "'.$product->id.'"
                     data-datatitle = "'.$product->title.'"
                     data-dataimage= "<img src=images/medium/'. $product->image .' >"
                     data-toggle="modal" 
                     data-target="#myModal"  
-                    class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
-                //return '<a data-toggle="modal" data-target="modal-default" href="#edit-'.$product->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+                    class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
+                if ($product->getOriginal('verified') == 0 )
+                return '<button class="btn btn-xs disabled"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
             })
+
             ->addColumn('thumb', function ($product) {
-                return '<a href="/products/'.$product->id.'"><img src="images/tiny/'.$product->image.'" /></a>';
+                return '<a href="/products/'.$product->id.'"><img src="/images/tiny/'.$product->image.'" /></a>';
             })
-            ->rawColumns(['title_a','thumb','action'])
-            ->make(true);
+            ->addColumn('d_stock', function ($product){
+                return $product->register_date.'<br><strong>Stok:</strong> '.$product->stock;
+            })
+            ->addColumn('edit', function ($product){
+                return '<a class="btn btn-xs btn-primary" href="/manage/products/'.$product->id.'/edit">Edit</a>';
+            })
+            ->rawColumns(['title_a','thumb','action','d_stock','edit']);
+            return $dt->make(true);
+    }
+
+
+    public function indexManage(){
+        $user_id = Auth::id();
+        $k = Order::with('lineitem')->whereUser_id($user_id)->whereStatus('proses')->first();   
+        return view('manage.product.index', ['items' => $k]);
     }
 
     public function index(){
-        $l = Lineitem::get();
-        return view('product.list', ['items' => $l]);
+        $user_id = Auth::id();
+        $k = Order::with('lineitem')->whereUser_id($user_id)->whereStatus('proses')->first();   
+        return view('product.index', ['items' => $k]);
     }
+
+
+    public function edit($id){
+        $p = Product::findOrFail($id);
+//        dd($p);
+        return view('manage.product.edit', ['product' => $p]);
+    }
+
+    public function update($id, Request $request){
+        $p = Product::findOrFail($id);
+
+        if (empty($p)) {
+            Flash::error('Product not found');
+            return redirect(route('manage.products.index'));
+        }
+
+
+
+        $p->update($request->all());
+
+        Flash::success('Product updated successfully.');
+        return redirect(route('manage.products.index'));
+    }
+
+
+
+
+
+
+
+    ///STANDART CRUD
 
     public function create(){
         return view('product.create');
@@ -72,24 +116,10 @@ class ProductController extends Controller
                 }
             }
         }
-
         $product->image = $name;
         $product->save();   
 
-        //$img = Image::make('upload/image/'.$name)->resize(250, null);
-        
-//         $img = Image::cache(function($image) use (&$name) {
-//             $image->make('upload/image/'.$name)->resize(100, 200);         
-//             $image->save('upload/image-node/'.$name);
-//         });
-        
-        //     //     $img = Image::make('upload/image/'.$name)->resize(320, 240);
-        // $img->save('upload/image-thumb/'.$name);
-        
-        
-
         Flash::success('Product saved successfully.');
-
         return redirect(route('products.index'));
     }
 
@@ -105,44 +135,6 @@ class ProductController extends Controller
 
         return view('product.show')->with('product', $product);
     }
-
-
-
-
-
-
-    //private $productRepository;
-
-
-
-
-
-    // public function __construct(ProductRepository $productRepo)
-    // {
-    //     $this->productRepository = $productRepo;
-    // }
-
-
-
-
-
-    // public function index(Request $request)
-    // {
-    //     $this->productRepository->pushCriteria(new RequestCriteria($request));
-    //     $products = $this->productRepository->all();
-
-    //     return view('products.index')
-    //         ->with('products', $products);
-    // }
-
-    
-
-
-
-    // public function create()
-    // {
-    //     return view('products.create');
-    // }
 
 
 
@@ -185,45 +177,13 @@ class ProductController extends Controller
     //  */
 
 
-    // /**
-    //  * Show the form for editing the specified Product.
-    //  *
-    //  * @param  int $id
-    //  *
-    //  * @return Response
-    //  */
-    // public function edit($id)
-    // {
-    //     $product = $this->productRepository->findWithoutFail($id);
-
-    //     if (empty($product)) {
-    //         Flash::error('Product not found');
-
-    //         return redirect(route('products.index'));
-    //     }
-
-    //     return view('products.edit')->with('product', $product);
-    // }
-
-    // /**
-    //  * Update the specified Product in storage.
-    //  *
-    //  * @param  int              $id
-    //  * @param UpdateProductRequest $request
-    //  *
-    //  * @return Response
-    //  */
     // public function update($id, UpdateProductRequest $request)
     // {
     //     $product = $this->productRepository->findWithoutFail($id);
 
-    //     if (empty($product)) {
-    //         Flash::error('Product not found');
 
-    //         return redirect(route('products.index'));
-    //     }
 
-    //     $product = $this->productRepository->update($request->all(), $id);
+    //     
 
     //     dd($product);
     //     //$img = Image::make($_FILES['image']['tmp_name']);

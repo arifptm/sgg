@@ -36,8 +36,13 @@ class LineitemController extends Controller
     }
 
     public function incart(){
+        dd(Auth::id());
     	$l = Lineitem::whereUser_id(Auth::id())->whereStatus('proses');
     	return view('lineitem.incart',[ 'items' => $l ]);
+    }
+
+    public function checkout($id){
+
     }
 
 

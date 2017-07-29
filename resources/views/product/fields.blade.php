@@ -1,62 +1,62 @@
 <div class="col-md-9">
     <div class="form-group col-sm-12">
-        {!! Form::label('title', 'Title:') !!}
+        {!! Form::label('title', 'Nama barang:') !!}
         {!! Form::text('title', null, ['class' => 'form-control']) !!}
     </div>
 
-    @role('admin||super')
+    @role('admin|super')
     <div class="form-group col-sm-12">
-        {!! Form::label('register_date', 'Register Date:') !!}
-        {!! Form::text('register_date', null, ['class' => 'form-control']) !!}
+        {!! Form::label('register_date', 'Tanggal masuk:') !!}
+        {!! Form::date('register_date', null, ['class' => 'form-control']) !!}
     </div>
     @endrole
 
     <div class="form-group col-sm-3">
-        {!! Form::label('image', 'Image:') !!}
-        {!! Form::file('image') !!}
+        {!! Form::label('image', 'Gambar:') !!}
+        {!! Form::file('image', ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-sm-9">
-        {!! Form::label('body', 'Body:') !!}
-        {!! Form::textarea('body', null, ['class' => 'form-control', 'rows' => '5']) !!}
+        {!! Form::label('body', 'Deskripsi:') !!}
+        {!! Form::textarea('body', null , ['class' => 'form-control', 'rows' => '5']) !!}
     </div>
 
     <div class="form-group col-sm-6">
-        {!! Form::label('url', 'URL:') !!}
-        {!! Form::text('url', null, ['class' => 'form-control']) !!}
+        {!! Form::label('url', 'Link:') !!}
+        {!! Form::url('url', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-sm-6">
-        {!! Form::label('price', 'Price:') !!}
-        {!! Form::text('price', null, ['class' => 'form-control']) !!}
+        {!! Form::label('price', 'Perkiraan harga:') !!}
+        {!! Form::number('price', null, ['class' => 'form-control']) !!}
     </div>
 
-    @role('admin||super')
+    @role('admin|super')
     <div class="form-group col-sm-6">
-        {!! Form::label('placement', 'Placement:') !!}
+        {!! Form::label('placement', 'Penempatan:') !!}
         {!! Form::text('placement', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-sm-12">
-        {!! Form::label('disposable', 'Disposable:') !!}
+        {!! Form::label('disposable', 'Habis pakai?:') !!}
         <label class="radio-inline">
-            {!! Form::radio('disposable', "Yes", null) !!} Yes
+            {!! Form::radio('disposable', "1", null) !!} Ya
         </label>
 
         <label class="radio-inline">
-            {!! Form::radio('disposable', "No", null) !!} No
+            {!! Form::radio('disposable', "0", null) !!} Tidak
         </label>
 
     </div>
 
     <div class="form-group col-sm-6">
-        {!! Form::label('stock', 'Stock:') !!}
+        {!! Form::label('stock', 'Stok:') !!}
         {!! Form::number('stock', null, ['class' => 'form-control']) !!}
     </div>
     @endrole
 
     <div class="form-group col-sm-12">
-        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-        <a href="{!! route('products.index') !!}" class="btn btn-default">Cancel</a>
+        {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+        <a href="{!! route('products.index') !!}" class="btn btn-default">Batal</a>
     </div>
 </div>

@@ -8,9 +8,18 @@ use App\Product;
 
 class UserController extends Controller
 {
-    public function tes()
-    {
+    public function list(){
+    	$u = User::all();
+    	return view('manage.user.list', ['users'=>$u] );
+    }
 
-    	$admin->attachPermission($createProduct)
+    public function create(){
+    	return view('manage.user.create');
+    }
+
+    public function store(Request $request){
+    	$u = User::create($request->all());
+    	$u -> attachRole('user');
+    	return redirect()->route('users.list');
     }
 }

@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Asset Management</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
-
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-    @yield('css')
+    <link rel="stylesheet" href="{{ asset('/bower_components/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/adminLTE/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/adminLTE/dist/css/skins/_all-skins.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/iCheck/skins/flat/blue.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/Ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bower_components/datatables/media/css/dataTables.bootstrap.min.css') }}">
+    @yield('h_scripts')
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
-<body class="skin-green-light sidebar-mini">
-@if (!Auth::guest())
+<body class="hold-transition skin-green-light sidebar-mini">
+@if (!Auth::guest()) 
     <div class="wrapper">
-        <!-- Main Header -->
         <header class="main-header">
-
-            <!-- Logo -->
             <a href="/" class="logo">
-                <b>Asset Management</b>
+                <span class="logo-mini"><b>A</b>M</span>
+                <span class="logo-lg"><b>Asset</b> Management</span>
             </a>
-
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -84,7 +83,28 @@
         @include('layouts.sidebar')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            @yield('content')
+            <section class="content-header">
+                @yield('content_title')
+            </section>
+            
+            <section class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        @if(View::hasSection('content_right'))
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    @yield('content')
+                                </div>
+                                <div class="col-sm-4">
+                                    @yield('content_right')
+                                </div>
+                            </div>    
+                        @else              
+                            @yield('content')    
+                        @endif
+                    </div>    
+                </div>
+            </section>
         </div>
 
         <!-- Main Footer -->
@@ -141,18 +161,18 @@
     @endif
 
     <!-- jQuery 3.1.1 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+    <script src="{{ asset('/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/iCheck/icheck.min.js') }}"></script>
 
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/datatables/media/js/dataTables.bootstrap.min.js') }}"></script>
 
+    <script src="{{ asset('/bower_components/adminLTE/dist/js/app.min.js') }}"></script>
 
+    <script src="{{ asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
-
-    @yield('scripts')
+    @yield('f_scripts')
 </body>
 </html>

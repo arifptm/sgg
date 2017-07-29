@@ -30,10 +30,12 @@ class HomeController extends Controller
     public function index()
     {
 
-        if (Laratrust::hasRole('user')) 
-        {           
+        if (Laratrust::hasRole('user')) {           
             return redirect('/products');
-        }
-        return redirect('/products');
+        } else if (Laratrust::hasRole('admin')) {           
+            return redirect('/manage/dashboard');
+        } else if (Laratrust::hasRole('super'))  {
+            return redirect('/manage/dashboard');  
+        }        
     }
 }
