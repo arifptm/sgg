@@ -22,4 +22,9 @@ class OrderController extends Controller
 	    return 'oye';
     }
 
+    public function index(){
+        $o = Order::all();
+        return view('manage.order.index', ['orders'=>$o]);
+    }
+
 }

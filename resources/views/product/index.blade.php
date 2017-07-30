@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content_title')
-   <h1>Daftar Barang</h1>
+   <h1>Beranda</h1>
 @endsection
 
 @section('content')    
    <div class="box">              
+      <div class="box-header">
+sdsadsa
+      </div>
       <div class="box-body">
          <table class="table table-bordered" id="products-table">
             <thead>
@@ -14,7 +17,7 @@
                   <th>Gambar</th>
                   <th>Nama Barang</th> 
                   <th>Deskripsi</th>                       
-                  <th>Tanggal</th>
+                  <th>Stok</th>
                   <th></th>
                </tr>
             </thead>
@@ -82,7 +85,7 @@
                   @foreach($items->lineitem as $key=>$item)
                      <tr>
                         <td> {{ $key+1 }} </td>
-                        <td> {{ $item->product->title }} </td>
+                        <td> {!! link_to('/products/'.$item->product->id, $item->product->title) !!} </td>
                         <td> {{ $item->quantity }} </td>
                      </tr>
                   @endforeach
@@ -126,7 +129,7 @@
    { data: 'thumb', name: 'thumb',orderable: false, searchable: false },
    { data: 'title_a', name: 'title' },
    { data: 'body', name: 'body',orderable: false, searchable: false },
-   { data: 'd_stock', name: 'd_stock' }, 
+   { data: 'stock', name: 'stock' }, 
    { data: 'action', name: 'action',orderable: false, searchable: false }
    ]
 });

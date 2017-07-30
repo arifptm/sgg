@@ -18,39 +18,45 @@
 
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            @role('user||super||admin')
+            @role('user')
             <li class="{{ Request::is('products*') ? 'active' : '' }}">
-                <a href="{!! route('products.create') !!}"><i class="fa fa-edit"></i><span>Usulan</span></a>
+                <a href="{!! route('products.index') !!}"><i class="fa fa-home"></i><span>Beranda</span></a>
             </li>
 
             <li class="{{ Request::is('lineitems*') ? 'active' : '' }}">
-                <a href="{!! route('lineitems.create') !!}"><i class="fa fa-car"></i><span>Permintaan</span></a>
+                <a href="{!! route('products.create') !!}"><i class="fa fa-bullhorn"></i><span>Usulan</span></a>
+            </li>
+
+            <li class="{{ Request::is('lineitems*') ? 'active' : '' }}">
+                <a href="{!! route('products.create') !!}"><i class="fa fa-shopping-cart"></i><span>Permintaan</span></a>
             </li>
             @endrole
 
             @role('admin|super')
-            <hr>
-            <li class="{{ Request::is('manage.products*') ? 'active' : '' }}">
-                <a href="/manage/products"><i class="fa fa-car"></i><span>Barang</span></a>
+
+            <li class="{{ Request::is('manage/dashboard*') ? 'active' : '' }}">
+                <a href="/"><i class="fa fa-home"></i><span>Dashboard</span></a>
             </li>
 
-            <li class="{{ Request::is('produscts*') ? 'active' : '' }}">
-                <a href="/manage/users"><i class="fa fa-car"></i><span>Daftar Permintaan</span></a>
+            <li class="{{ Request::is('manage/products*') ? 'active' : '' }}">
+                <a href="/manage/products"><i class="fa fa-bullhorn"></i><span>Daftar Barang</span></a>
+            </li> 
+
+            <li class="{{ Request::is('manage/products/list-proposal*') ? 'active' : '' }}">
+                <a href="/manage/products/list-proposal"><i class="fa fa-bullhorn"></i><span>Daftar Usulan</span></a>
+            </li>            
+
+            <li class="{{ Request::is('manage/orders*') ? 'active' : '' }}">
+                <a href="/manage/orders"><i class="fa fa-shopping-cart"></i><span>Daftar Permintaan</span></a>
             </li>
 
-            <li class="{{ Request::is('prodsucts*') ? 'active' : '' }}">
-                <a href="/manage/users"><i class="fa fa-car"></i><span>Daftar Usulan</span></a>
-            </li>
-            @endrole
-
-            @role('super')
             <hr>
             <li class="{{ Request::is('prosducts*') ? 'active' : '' }}">
-                <a href="/manage/users"><i class="fa fa-car"></i><span>Users</span></a>
+                <a href="/manage/users"><i class="fa fa-users"></i><span>Users</span></a>
             </li>
-            <li class="{{ Request::is('prosducts*') ? 'active' : '' }}">
+<!--             <li class="{{ Request::is('prosducts*') ? 'active' : '' }}">
                 <a href="/manage/roles"><i class="fa fa-car"></i><span>Roles</span></a>
-            </li>
+            </li> -->
             @endrole
 
         </ul>

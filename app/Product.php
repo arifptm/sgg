@@ -13,10 +13,19 @@ class Product extends Model
     
     protected $guarded = ['id'];
 
+    public function user(){
+        return $this->belongsTo('App\user');
+    }
+
     public function getVerifiedAttribute($v){
         if ($v == 0){
             return 'Belum diverifikasi';
         }    
+    } 
+
+    public function getCreatedAtAttribute($v){
+            return Carbon::parse($v)->format('d-m-Y');
+
     } 
 
     public function getRegisterDateAttribute($v){
@@ -41,5 +50,10 @@ class Product extends Model
             ]
         ];
     }
+
+    public function getPriceAttribute($v)
+    {
+        return number_format($v,0,",",".");
+    }    
 
 }

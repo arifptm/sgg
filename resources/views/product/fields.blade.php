@@ -1,4 +1,4 @@
-<div class="col-md-9">
+
     <div class="form-group col-sm-12">
         {!! Form::label('title', 'Nama barang:') !!}
         {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -56,7 +56,7 @@
     @endrole
 
     <div class="form-group col-sm-12">
+        {!! Form::hidden('user_id', Auth::id()) !!}
         {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
         <a href="{!! route('products.index') !!}" class="btn btn-default">Batal</a>
     </div>
-</div>

@@ -43,9 +43,6 @@ class ProductController extends Controller
             ->addColumn('thumb', function ($product) {
                 return '<a href="/products/'.$product->id.'"><img src="/images/tiny/'.$product->image.'" /></a>';
             })
-            ->addColumn('d_stock', function ($product){
-                return $product->register_date.'<br><strong>Stok:</strong> '.$product->stock;
-            })
             ->addColumn('edit', function ($product){
                 return '<a class="btn btn-xs btn-primary" href="/manage/products/'.$product->id.'/edit">Edit</a>';
             })
@@ -81,24 +78,16 @@ class ProductController extends Controller
             return redirect(route('manage.products.index'));
         }
 
-
-
         $p->update($request->all());
 
         Flash::success('Product updated successfully.');
         return redirect(route('manage.products.index'));
     }
 
-
-
-
-
-
-
-    ///STANDART CRUD
-
     public function create(){
-        return view('product.create');
+        $p = Product::whereUser_id(Auth::id())->get();
+        
+        return view('product.create', ['products'=>$p]);
     }
 
     public function store(Request $request){
@@ -114,10 +103,13 @@ class ProductController extends Controller
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
+                $product->image = $name;
+                $product->save();    
             }
+        } else {
+            $product->image = 'noimage.jpg';
+            $product->save();  
         }
-        $product->image = $name;
-        $product->save();   
 
         Flash::success('Product saved successfully.');
         return redirect(route('products.index'));
@@ -134,6 +126,11 @@ class ProductController extends Controller
         }
 
         return view('product.show')->with('product', $product);
+    }
+
+    public function listProposal(){
+        $p = Product::whereVerified(0)->get();
+        return view('manage.product.list_proposal', ['products'=>$p]);
     }
 
 

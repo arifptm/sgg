@@ -9,7 +9,7 @@ use App\Product;
 class UserController extends Controller
 {
     public function list(){
-    	$u = User::all();
+    	$u = User::where('id','<>','1')->get();
     	return view('manage.user.list', ['users'=>$u] );
     }
 
@@ -21,5 +21,10 @@ class UserController extends Controller
     	$u = User::create($request->all());
     	$u -> attachRole('user');
     	return redirect()->route('users.list');
+    }
+
+    public function show($id){
+        $u = User::findOrFail($id);
+        return view('manage.user.show',['user'=>$u]);
     }
 }

@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['role:user|super']], function() {
 	Route::get('products/data', 'ProductController@data')->name('products.data');	
@@ -42,22 +42,36 @@ Route::group(['prefix'=>'manage', 'middleware' => ['role:super|admin']], functio
 
 	Route::get('dashboard', 'DashboardController@index');
 
-	
+	Route::get('users', 'UserController@list')->name('manage.users.list');	
+	Route::get('users/create', 'UserController@create')->name('manage.users.create');	
+	Route::post('users/store', 'UserController@store')->name('manage.users.store');
+	Route::get('users/{id}', 'UserController@show')->name('manage.users.show');	
+	Route::get('users/{id}/edit', 'UserController@edit')->name('manage.users.edit');
+	Route::patch('users/{id}', 'UserController@update')->name('manage.users.update');
+	Route::delete('users/{id}', 'UserController@destroy')->name('manage.users.destroy');
+
 
 	Route::get('products', 'ProductController@indexManage')->name('manage.products.index');
+	Route::get('products/list-proposal', 'ProductController@listProposal')->name('manage.products.list-proposal');
 	Route::get('products/{id}/edit', 'ProductController@edit')->name('manage.products.edit');
 	Route::patch('products/{id}', 'ProductController@update')->name('manage.products.update');
 
 
-	Route::get('products/create', 'ProductController@create')->name('products.create');
-	Route::post('products/store', 'ProductController@store')->name('products.store');
+	Route::get('products/create', 'ProductController@create')->name('manage.products.create');
+	Route::post('products/store', 'ProductController@store')->name('manage.products.store');
 
 
 	Route::delete('products/{id}', 'ProductController@edit')->name('products.edit');
 
-	Route::get('users', 'UserController@list')->name('users.list');	
-	Route::post('users/store', 'UserController@store')->name('users.store');
-	Route::get('users/create', 'UserController@create')->name('users.create');
+	Route::get('orders', 'OrderController@index')->name('manage.orders.index');	
+	Route::get('orders/create', 'OrderController@create')->name('manage.orders.create');	
+	Route::post('orders/store', 'OrderController@store')->name('manage.orders.store');
+	Route::get('orders/{id}', 'OrderController@show')->name('manage.orders.show');	
+	Route::get('orders/{id}/edit', 'OrderController@edit')->name('manage.orders.edit');
+	Route::patch('orders/{id}', 'OrderController@update')->name('manage.orders.update');
+	Route::delete('orders/{id}', 'OrderController@destroy')->name('manage.orders.destroy');	
+
+
 
 	Route::get('roles', 'RoleController@list')->name('roles.list');
 	Route::post('roles/store', 'RoleController@store')->name('roles.store');

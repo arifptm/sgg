@@ -22,12 +22,12 @@ class CreateProductsTable extends Migration
             $table->timestamp('register_date')->nullable();
             $table->text('body')->nullable();
             $table->string('image', 127)->nullable();
-            $table->decimal('price')->nullable();
+            $table->string('price',15)->nullable();
             $table->string('url', 127)->nullable();
             $table->string('placement', 63)->nullable();
             $table->boolean('disposable')->nullable();
             $table->boolean('verified')->default(0);
-            $table->integer('stock')->nullable();
+            $table->integer('stock')->default(0);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

@@ -14,7 +14,7 @@
                   <th>Gambar</th>
                   <th>Nama Barang</th> 
                   <th>Deskripsi</th>                       
-                  <th>Tanggal</th>
+                  <th>Stok</th>
                   <th></th>
                </tr>
             </thead>
@@ -85,8 +85,7 @@
    { data: 'thumb', name: 'thumb',orderable: false, searchable: false },
    { data: 'title_a', name: 'title' },
    { data: 'body', name: 'body',orderable: false, searchable: false },
-   { data: 'd_stock', name: 'd_stock' }, 
-
+   { data: 'stock', name: 'stock' }, 
    { data: 'edit', name: 'edit',orderable: false, searchable: false }
    ]
 });
