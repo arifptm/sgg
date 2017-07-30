@@ -7,7 +7,7 @@
     @role('admin|super')
     <div class="form-group col-sm-12">
         {!! Form::label('register_date', 'Tanggal masuk:') !!}
-        {!! Form::date('register_date', null, ['class' => 'form-control']) !!}
+        {!! Form::date('register_date', \Carbon\Carbon::createFromDate($product->getOriginal('register_date'))->format('Y-m-d'), ['class' => 'form-control']) !!}
     </div>
     @endrole
 

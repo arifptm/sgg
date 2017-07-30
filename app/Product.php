@@ -32,7 +32,7 @@ class Product extends Model
         if (Route::currentRouteName() == 'products.data'){
             return Carbon::parse($v)->format('d-m-Y');
         }
-        return Carbon::parse($v)->format('m-d-Y');
+        
     } 
 
     public function getBodyAttribute($v){
