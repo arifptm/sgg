@@ -18,11 +18,7 @@ class Product extends Model
         return $this->belongsTo('App\user');
     }
 
-    public function getVerifiedAttribute($v){
-        if ($v == 0){
-            return 'Belum diverifikasi';
-        }    
-    } 
+
 
     public function getCreatedAtAttribute($v){
             return Carbon::parse($v)->format('d-m-Y');

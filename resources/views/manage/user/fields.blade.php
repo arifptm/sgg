@@ -23,5 +23,5 @@
 
     <div class="form-group col-sm-12">
         {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
-        <a href="{!! route('users.list') !!}" class="btn btn-default">Batal</a>
+        <a href="/manage/users" class="btn btn-default">Batal</a>
     </div>  

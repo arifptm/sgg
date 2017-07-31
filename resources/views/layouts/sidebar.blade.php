@@ -3,7 +3,7 @@
     <section class="sidebar">
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="http://infyom.com/images/logo/blue_logo_150x150.jpg" class="img-circle"
+                <img src="{{ asset('/upload/image/am-icon.png') }}" class="img-circle"
                      alt="User Image"/>
             </div>
             <div class="pull-left info">
@@ -24,11 +24,11 @@
             </li>
 
             <li class="{{ Request::is('lineitems*') ? 'active' : '' }}">
-                <a href="{!! route('products.create') !!}"><i class="fa fa-bullhorn"></i><span>Usulan</span></a>
+                <a href="{!! route('products.create') !!}"><i class="fa fa-bullhorn"></i><span>Tambah Usulan</span></a>
             </li>
 
             <li class="{{ Request::is('lineitems*') ? 'active' : '' }}">
-                <a href="{!! route('products.create') !!}"><i class="fa fa-shopping-cart"></i><span>Permintaan</span></a>
+                <a href='/orders'><i class="fa fa-shopping-cart"></i><span>Riwayat Permintaan</span></a>
             </li>
             @endrole
 

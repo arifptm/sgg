@@ -18,7 +18,7 @@ class LineitemController extends Controller
 
      	$to_order = [
     		'user_id' => Auth::id(),
-    		'status' => 'proses'
+    		'status' => 'Incart'
     	];
 		$o = Order::firstOrCreate($to_order);
 		$o->save();  

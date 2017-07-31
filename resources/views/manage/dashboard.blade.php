@@ -11,8 +11,8 @@
         <div class="box box-primary">
             <div class="box-body">
 
-<div class="row">
-        <div class="col-lg-3 col-xs-6">
+      <div class="row">
+        <div class="col-lg-4 ">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
@@ -23,11 +23,11 @@
             <div class="icon">
               <i class="ion ion-person-stalker"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/manage/users" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
@@ -38,11 +38,11 @@
             <div class="icon">
               <i class="ion ion-clipboard"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/manage/products/list-proposal" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 ">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
@@ -53,30 +53,67 @@
             <div class="icon">
               <i class="ion ion-android-cart"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/manage/orders" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>65</h3>
-
-              <p>Unique Visitors</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+       
         <!-- ./col -->
       </div>
 
-
-
             </div>
         </div>
 
+<div class="row">
+  <div class="col-sm-4">
+    <div class="box box-primary">
+      <div class="box-header">
+          <h3 class="box-title">User</h3>
+      </div>
+      <div class="box-body">
+        <ul>
+          @foreach($allusers as $user)
+            <li>{{ $user->name }}</li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-sm-4">
+    <div class="box box-primary">
+      <div class="box-header">
+          <h3 class="box-title">Usulan</h3>
+      </div>
+      <div class="box-body">
+          <ul>
+          @foreach($allproducts as $product)
+            <li>{{ $product->title }}</li>
+          @endforeach
+          </ul>
+      </div>
+    </div>
+  </div>
+
+    <div class="col-sm-4">
+    <div class="box box-primary">
+      <div class="box-header">
+          <h3 class="box-title">Permintaan</h3>
+      </div>
+      <div class="box-body">
+        <ul>
+          @foreach($allorders as $order)
+            <li>{{ $order->user->name }}
+              <ul>
+                @foreach($order->lineitem as $lorder)
+                  <li>{{ $lorder->product->title }}</li>
+                @endforeach
+              </ul>
+            </li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
 @endsection

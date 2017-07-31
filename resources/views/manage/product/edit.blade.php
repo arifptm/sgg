@@ -23,13 +23,13 @@
 <script>
   $(document).ready(function(){
     $('input.accept').on('ifChecked ifClicked', function(event){
-      $('#showme').fadeIn('slow');
+      $('#showme').fadeIn('slow').removeClass('hidden');
     }).iCheck({
       radioClass   : 'iradio_flat-blue'
     })
 
     $('input.reject,input.notverified').on('ifChecked ifClicked', function(event){
-      $('#showme').hide();
+      $('#showme').hide().addClass('hidden');
     }).iCheck({
       radioClass   : 'iradio_flat-blue'
     })

@@ -42,6 +42,9 @@
                            {!! Form::button('Proses',['class'=>'btn btn-primary btn-xs']) !!}
                         @endif
                      </td>
+                     <td>
+                        {!! Form::button('Proses',['class'=>'btn btn-xs btn-primary']) !!}
+                     </td>
 
 
                   </tr>

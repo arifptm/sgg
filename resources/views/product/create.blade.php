@@ -20,6 +20,7 @@
         </div>
 @endsection
 
+@if(count($products) != 0)
 @section('content_right')
     <div class="box box-info">
         <div class="box-header with-border">
@@ -31,7 +32,11 @@
                     <ul>
                         @foreach($products as $product)
                             <li><small>{{ $product -> created_at }}</small> | {!! link_to('/products/'.$product->id, $product->title) !!}<br><small>Status: 
-                            {{ ($product->verified == '0') ? 'asd' : 'as' }}</small> </td></li>
+                            @if($product->verified == 9 )Belum diverifikasi
+                            @elseif($product->verified == 0)DITOLAK
+                            @else Disetujui
+                            @endif                            
+                            </small> </td></li>
                         @endforeach
                     </ul>    
                 </div>
@@ -39,4 +44,5 @@
         </div>        
     </div>
 @endsection
+@endif
 

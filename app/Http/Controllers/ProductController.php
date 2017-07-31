@@ -31,14 +31,13 @@ class ProductController extends Controller
 
     public function index(){
         $user_id = Auth::id();
-        $k = Order::with('lineitem')->whereUser_id($user_id)->whereStatus('proses')->first();   
+        $k = Order::with('lineitem')->whereUser_id($user_id)->whereStatus('Incart')->first();   
         return view('product.index', ['items' => $k]);
     }
 
 
     public function edit($id){
         $p = Product::findOrFail($id);
-//        dd($p);
         return view('manage.product.edit', ['product' => $p]);
     }
 
@@ -49,16 +48,22 @@ class ProductController extends Controller
             return redirect(route('manage.products.index'));
         }
 
-        $p->update($request->all());
+        $input = $request->all();
+        if ($request->hasFile('image')) {
+            $input['image'] = $this->upload($request);
+        }
+
+
+        $p->update($input);
 
         Flash::success('Product updated successfully.');
         return redirect(route('manage.products.index'));
     }
 
     public function create(){
-        $p = Product::whereUser_id(Auth::id())->get();
-        
-        return view('product.create', ['products'=>$p]);
+        $id = Auth::id();
+        $p = Product::whereUser_id($id)->get();
+        return view('product.create', ['products'=>$p, 'id' => $id]);
     }
 
     public function store(Request $request){
@@ -106,7 +111,7 @@ class ProductController extends Controller
     }
 
     public function listProposal(){
-        $p = Product::whereVerified(0)->get();
+        $p = Product::whereVerified(9)->get();
         return view('manage.product.list_proposal', ['products'=>$p]);
     }
 
@@ -208,14 +213,22 @@ class ProductController extends Controller
     }
 
     public function data(){
-
-        $product= Product::select(['id', 'stock', 'title', 'body', 'image', 'register_date', 'verified'])->where('verified','=', 1)->orWhere('verified','=', null );
+        if (Laratrust::hasRole('admin|super|')){
+            $product= Product::select(['id', 'stock', 'title', 'body', 'image', 'register_date', 'verified']);
+        } else {
+            $product= Product::select(['id', 'stock', 'title', 'body', 'image', 'register_date', 'verified'])->where('verified','!=', 0);
+        }
         $dt = Datatables::of($product)
             ->addColumn('title_a', function ($product) {
-                return '<a href="/products/'.$product->id.'">'.$product->title.'</a><br><small>'. $product->verified.'</small>';
+                if ($product->verified == 9)
+                return '<a href="/products/'.$product->id.'">'.$product->title.'</a><br><small>Belum diverifikasi</small>';
+                if ($product->verified == 0)
+                return '<a href="/products/'.$product->id.'">'.$product->title.'</a><br><small>DITOLAK</small>';
+                else
+                return '<a href="/products/'.$product->id.'">'.$product->title.'</a>';                    
             })
             ->addColumn('action', function ($product) {
-                if ($product->getOriginal('verified') == 1 )
+                if ($product->verified == 1 )
                 return '<button             
                     data-dataid = "'.$product->id.'"
                     data-datatitle = "'.$product->title.'"
@@ -223,7 +236,7 @@ class ProductController extends Controller
                     data-toggle="modal" 
                     data-target="#myModal"  
                     class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
-                if ($product->getOriginal('verified') == 0 )
+                if ($product->verified == 9 )
                 return '<button class="btn btn-xs disabled"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
             })
 
@@ -236,6 +249,7 @@ class ProductController extends Controller
             ->addColumn('edit', function ($product){
                 return '<a class="btn btn-xs btn-primary" href="/manage/products/'.$product->id.'/edit">Edit</a>';
             })
+
             ->rawColumns(['title_a','thumb','action','d_stock','edit']);
             return $dt->make(true);
     }

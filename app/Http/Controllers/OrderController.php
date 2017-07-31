@@ -5,21 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use Auth;
+use Flash;
 
 class OrderController extends Controller
 {
     public function checkout(Request $request){
 
-    	$o = Order::find($request->id);
-
-		
-			$input['status'] = 'Active';
-			$input['user_id'] = Auth::id();
-		
-		
-		
+    	$o = Order::find($request->id);		
+			$input['status'] = 'Pending';
+			$input['user_id'] = Auth::id();		
 		$o->update($input);
-	    return 'oye';
+		Flash::success('Permintaan sudah terkirim, dan menunggu persetujuan.');
+	    return redirect('/products');
     }
 
     public function index(){

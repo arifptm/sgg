@@ -11,20 +11,28 @@ use App\Order;
 class DashboardController extends Controller
 {
     public function index(){
-    	$u_u = User::whereRoleIs('user')->get();
+    	$users = User::all();
+        $u_u = User::whereRoleIs('user')->get();
     	$u_a = User::whereRoleIs('admin')->get();
 
+        $products = Product::all();
     	$p_p = Product::whereVerified(0)->get();
     	$p_v = Product::whereVerified(1)->get();
 
+        $orders = Order::all();
     	$o = Order::whereStatus('Active')->get();
 
     	return view('manage.dashboard')->with([
-    		'products_pending' => $p_p,
+    		'allproducts' => $products,
+            'products_pending' => $p_p,
     		'products_verified' => $p_v,
-    		'users' => $u_u,
+    		'allusers' => $users,
+            'users' => $u_u,
     		'admins' => $u_a,
-    		'orders' => $o
+    		'allorders' => $orders,
+
+            'orders' => $o
+
     		]);
     }
 }

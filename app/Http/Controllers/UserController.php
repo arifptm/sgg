@@ -20,7 +20,7 @@ class UserController extends Controller
     public function store(Request $request){
     	$u = User::create($request->all());
     	$u -> attachRole('user');
-    	return redirect()->route('users.list');
+    	return redirect('/manage/users');
     }
 
     public function show($id){

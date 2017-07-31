@@ -34,6 +34,9 @@ Route::group(['middleware' => ['role:user|super']], function() {
 
 	Route::post('orders/checkout', 'OrderController@checkout')->name('orders.checkout');
 
+	Route::resource('orders', 'OrderController');
+
+
 });
 
 
