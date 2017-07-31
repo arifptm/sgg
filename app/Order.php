@@ -14,4 +14,8 @@ class Order extends Model
     	return $this->hasMany('App\Lineitem');
     }
 
+
+    public function user(){
+    	return $this->belongsTo('App\User');
+    }
 }

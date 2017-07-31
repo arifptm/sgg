@@ -20,35 +20,7 @@ use Yajra\Datatables\Facades\Datatables;
 
 class ProductController extends Controller
 {
-    public function data(){
 
-        $product= Product::select(['id', 'stock', 'title', 'body', 'image', 'register_date', 'verified']);
-        $dt = Datatables::of($product)
-            ->addColumn('title_a', function ($product) {
-                return '<a href="/products/'.$product->id.'">'.$product->title.'</a><br><small>'. $product->verified.'</small>';
-            })
-            ->addColumn('action', function ($product) {
-                if ($product->getOriginal('verified') == 1 )
-                return '<button             
-                    data-dataid = "'.$product->id.'"
-                    data-datatitle = "'.$product->title.'"
-                    data-dataimage= "<img src=images/medium/'. $product->image .' >"
-                    data-toggle="modal" 
-                    data-target="#myModal"  
-                    class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
-                if ($product->getOriginal('verified') == 0 )
-                return '<button class="btn btn-xs disabled"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
-            })
-
-            ->addColumn('thumb', function ($product) {
-                return '<a href="/products/'.$product->id.'"><img src="/images/tiny/'.$product->image.'" /></a>';
-            })
-            ->addColumn('edit', function ($product){
-                return '<a class="btn btn-xs btn-primary" href="/manage/products/'.$product->id.'/edit">Edit</a>';
-            })
-            ->rawColumns(['title_a','thumb','action','d_stock','edit']);
-            return $dt->make(true);
-    }
 
 
     public function indexManage(){
@@ -72,7 +44,6 @@ class ProductController extends Controller
 
     public function update($id, Request $request){
         $p = Product::findOrFail($id);
-
         if (empty($p)) {
             Flash::error('Product not found');
             return redirect(route('manage.products.index'));
@@ -92,24 +63,30 @@ class ProductController extends Controller
 
     public function store(Request $request){
         $input = $request->all();
+        
+        if ($request->hasFile('image')) {
+            $input['image'] = $this->upload($request);
+        }
+
         $product = Product::create($input);
 
-        if ($request->hasFile('image')) {
-            if($request->file('image')->isValid()) {
-                try {
-                    $file = $request->file('image');
-                    $name = time() . '.' . $file->guessClientExtension();
-                    $request->file('image')->move("upload/image/", $name);
-                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
-                }
-                $product->image = $name;
-                $product->save();    
-            }
-        } else {
-            $product->image = 'noimage.jpg';
-            $product->save();  
-        }
+        // if ($request->hasFile('image')) {
+        //     if($request->file('image')->isValid()) {
+        //         try {
+        //             $file = $request->file('image');
+        //             $name = time() . '.' . $file->guessClientExtension();
+        //             $request->file('image')->move("upload/image/", $name);
+        //         } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+        //         }
+        //         $product->image = $name;
+        //         $product->save();    
+        //     }
+        // } else {
+        //     $product->image = 'noimage.png';
+        //     $product->save();  
+        // }
 
         Flash::success('Product saved successfully.');
         return redirect(route('products.index'));
@@ -214,4 +191,52 @@ class ProductController extends Controller
 
     //     return redirect(route('products.index'));
     // }
+
+    public function upload(Request $request){
+        
+            if($request->file('image')->isValid()) {
+                try {
+                    $file = $request->file('image');
+                    $name = time() . '.' . $file->guessClientExtension();
+                    $request->file('image')->move("upload/image/", $name);
+                    return $name;
+
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+    }
+
+    public function data(){
+
+        $product= Product::select(['id', 'stock', 'title', 'body', 'image', 'register_date', 'verified'])->where('verified','=', 1)->orWhere('verified','=', null );
+        $dt = Datatables::of($product)
+            ->addColumn('title_a', function ($product) {
+                return '<a href="/products/'.$product->id.'">'.$product->title.'</a><br><small>'. $product->verified.'</small>';
+            })
+            ->addColumn('action', function ($product) {
+                if ($product->getOriginal('verified') == 1 )
+                return '<button             
+                    data-dataid = "'.$product->id.'"
+                    data-datatitle = "'.$product->title.'"
+                    data-dataimage= "<img src=images/medium/'. $product->image .' >"
+                    data-toggle="modal" 
+                    data-target="#myModal"  
+                    class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
+                if ($product->getOriginal('verified') == 0 )
+                return '<button class="btn btn-xs disabled"><i class="glyphicon glyphicon-plus"></i> Permintaan</button>';
+            })
+
+            ->addColumn('thumb', function ($product) {
+                if($product->image <> null)
+                return '<a href="/products/'.$product->id.'"><img src="/images/tiny/'.$product->image.'" /></a>';
+                if($product->image == null)
+                return '<a href="/products/'.$product->id.'"><img src="/images/tiny/noimage.png" /></a>';
+            })
+            ->addColumn('edit', function ($product){
+                return '<a class="btn btn-xs btn-primary" href="/manage/products/'.$product->id.'/edit">Edit</a>';
+            })
+            ->rawColumns(['title_a','thumb','action','d_stock','edit']);
+            return $dt->make(true);
+    }
 }

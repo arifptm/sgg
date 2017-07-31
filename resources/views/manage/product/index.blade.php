@@ -14,6 +14,7 @@
                   <th>Gambar</th>
                   <th>Nama Barang</th> 
                   <th>Deskripsi</th>                       
+                  <th>Tgl. Verifikasi</th>
                   <th>Stok</th>
                   <th></th>
                </tr>
@@ -84,7 +85,8 @@
    { data: 'id', name: 'id' },
    { data: 'thumb', name: 'thumb',orderable: false, searchable: false },
    { data: 'title_a', name: 'title' },
-   { data: 'body', name: 'body',orderable: false, searchable: false },
+   { data: 'body', name: 'body',orderable: false, searchable: false, defaultContent: 'No Description' },
+   { data: 'register_date', name: 'register_date',orderable: false, searchable: false }, 
    { data: 'stock', name: 'stock' }, 
    { data: 'edit', name: 'edit',orderable: false, searchable: false }
    ]

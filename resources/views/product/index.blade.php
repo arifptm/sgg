@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')    
-   <div class="box">              
-      <div class="box-header">
-sdsadsa
-      </div>
+   <div class="box">       
+      <div class="box-header with-border">
+         <h3 class="box-title">Daftar barang</h3>
+      </div>         
       <div class="box-body">
          <table class="table table-bordered" id="products-table">
             <thead>
@@ -120,7 +120,6 @@ sdsadsa
    processing: true,
    serverSide: true,
    responsive: true,
-   lengthChange: false,
    autoWidth   : false,
    order: [ 0, "desc" ],
    ajax: '{!! route('products.data') !!}',

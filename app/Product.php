@@ -12,6 +12,7 @@ class Product extends Model
 	use Sluggable;
     
     protected $guarded = ['id'];
+    protected $dates = ['register_date'];
 
     public function user(){
         return $this->belongsTo('App\user');
@@ -29,10 +30,10 @@ class Product extends Model
     } 
 
     public function getRegisterDateAttribute($v){
-        if (Route::currentRouteName() == 'products.data'){
+        if ($v <> null){
             return Carbon::parse($v)->format('d-m-Y');
-        }
-        
+        }   
+        return '-'  ;
     } 
 
     public function getBodyAttribute($v){

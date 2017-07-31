@@ -11,10 +11,10 @@
             <thead>
                <tr>
                   <th>Id</th>
-                  <th>Gambar</th>
+                  <th>Tanggal</th>
+                  <th>User</th>
                   <th>Nama Barang</th> 
-                  <th>Deskripsi</th>                       
-                  <th>Oleh</th>
+                  <th>Status</th>
                   <th></th>
                </tr>
             </thead>
@@ -24,7 +24,25 @@
                      <td>
                         {{ $order->id }}
                      </td>
-<!--  -->
+                     <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                     <td>
+                        {{ $order->user->name }}
+                     </td>
+                     <td>
+                        <ul>
+                           @foreach($order->lineitem as $lineitem)
+                              <li>{{ $lineitem->product->title }} ({{ $lineitem->quantity }})</li>
+                              
+                           @endforeach
+                        </ul>
+                     </td>
+                     <td> {{ $order->status }}</td>
+                     <td>
+                        @if($order->status == 'Active')
+                           {!! Form::button('Proses',['class'=>'btn btn-primary btn-xs']) !!}
+                        @endif
+                     </td>
+
 
                   </tr>
                @endforeach

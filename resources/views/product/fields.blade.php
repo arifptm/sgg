@@ -4,12 +4,12 @@
         {!! Form::text('title', null, ['class' => 'form-control']) !!}
     </div>
 
-    @role('admin|super')
+<!--     @role('admin|super')
     <div class="form-group col-sm-12">
         {!! Form::label('register_date', 'Tanggal masuk:') !!}
-        {!! Form::date('register_date', \Carbon\Carbon::createFromDate($product->getOriginal('register_date'))->format('Y-m-d'), ['class' => 'form-control']) !!}
+        {!! Form::date('register_date', !empty($product) ? Carbon\Carbon::parse($product->register_date)->format('Y-m-d') : null, ['class' => 'form-control']) !!}
     </div>
-    @endrole
+    @endrole -->
 
     <div class="form-group col-sm-3">
         {!! Form::label('image', 'Gambar:') !!}
@@ -38,15 +38,18 @@
     </div>
 
     <div class="form-group col-sm-12">
-        {!! Form::label('disposable', 'Habis pakai?:') !!}
-        <label class="radio-inline">
-            {!! Form::radio('disposable', "1", null) !!} Ya
-        </label>
+           
+            {!! Form::label('disposable', 'Habis pakai ?') !!}
+            
+            <label class="radio-inline"> 
+                {!! Form::radio('disposable', "1", null,['class'=>'flat-blue'] ) !!} Ya
+            </label>
+            
 
-        <label class="radio-inline">
-            {!! Form::radio('disposable', "0", null) !!} Tidak
-        </label>
-
+            <label class="radio-inline"> 
+                {!! Form::radio('disposable', "0", null, ['class'=>'flat-blue']) !!} Tidak
+            </label>
+            
     </div>
 
     <div class="form-group col-sm-6">

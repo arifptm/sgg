@@ -30,7 +30,8 @@
                 <div class="col-sm-12">
                     <ul>
                         @foreach($products as $product)
-                            <li><small>{{ $product -> created_at }}</small> | {!! link_to('/products/'.$product->id, $product->title) !!} </td></li>
+                            <li><small>{{ $product -> created_at }}</small> | {!! link_to('/products/'.$product->id, $product->title) !!}<br><small>Status: 
+                            {{ ($product->verified == '0') ? 'asd' : 'as' }}</small> </td></li>
                         @endforeach
                     </ul>    
                 </div>
